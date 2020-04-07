@@ -44,6 +44,6 @@
 #define MOUSEKEY_WHEEL_DELAY 0
 
 // Mod Tap
-#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
 
    
