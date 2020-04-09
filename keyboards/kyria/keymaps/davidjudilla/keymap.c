@@ -34,19 +34,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------.                              ,-------------------------------------------.
  * | GESC    |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
  * |---------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Tab |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  Enter |
+ * |Ctrl/Tab |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |---------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  RShift|
+ * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  - _   |
  * `-----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                         | MUTE | Ctrl | Alt  | Space| Lower|  | Raise| Space| GUI  |  Alt | LOCK |
+ *                         | MUTE | Alt  |Lower | Space| Ctrl |  | Ctrl | Space| Raise|  Alt | LOCK |
  *                         |      |      |      |  GUI |      |  |      |LShift|      |      |      |
  *                         `----------------------------------'  `----------------------------------'
  */
-[_QWERTY] = LAYOUT(
-      KC_GESC,              KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                  KC_Y,        KC_U,     KC_I,     KC_O,    KC_P,               KC_BSPC,
-      MT(MOD_LCTL, KC_TAB), KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                  KC_H,        KC_J,     KC_K,     KC_L,    LT(_NAV, KC_SCLN),  KC_ENT,
-      KC_LSFT,              KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,    MT(MOD_LCTL, KC_TAB), KC_LSFT,    KC_CMDC,    KC_CMDC,     KC_N,     KC_M,     KC_COMM, KC_DOT,  LT(_MOUSE, KC_SLSH),           KC_RSFT,
-                                            KC_MUTE, KC_LCTL, KC_LALT, MT(MOD_LGUI, KC_SPC), MO(_LOWER), MO(_RAISE), MT(MOD_LSFT, KC_SPC),  KC_LGUI,  KC_LALT, K_LOCK
+    [_QWERTY] = LAYOUT(
+      KC_GESC,              KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,        KC_U,     KC_I,        KC_O,    KC_P,                KC_BSPC,
+      MT(MOD_LCTL, KC_TAB), KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,        KC_J,     KC_K,        KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
+      KC_LSFT,              KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_LSFT, KC_CMDC,     KC_N,        KC_M,     KC_COMM,     KC_DOT,  LT(_MOUSE, KC_SLSH), KC_MINS,
+                                            KC_MUTE, KC_LALT, MO(_LOWER), MT(MOD_LGUI, KC_SPC), KC_LCTL, MT(MOD_RCTL, KC_ENT), MT(MOD_LSFT, KC_SPC),  LT(_RAISE, KC_SPACE),  KC_LALT, K_LOCK
     ),
 /*
  * Lower Layer: Symbols
@@ -66,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-                                 _______, _______, KC_SCLN, KC_EQL, _______, _______, MT(MOD_LSFT, KC_EQL),  KC_SCLN, _______, _______ 
+                                 _______, _______, _______, KC_SCLN, KC_EQL,  KC_EQL,  MT(MOD_LSFT, KC_SCLN), _______, _______, _______ 
     ),
 /*
  * Raise Layer: Number keys, media, navigation
@@ -74,19 +74,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | Prev | Play | Next | VolUp|                              |      |  4   |  5   |  6   |      |        |
+ * |        |      | Prev | Play | Next | VolUp|                              |  Tab |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      | Mute | VolDn|      |      |  |      |      |      |  1   |  2   |  3   |      |        |
+ * |        |      |      |      | Mute | VolDn|      |      |  |      |      |   0  |  1   |  2   |  3   |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |  0   |  0   |
+ *                        |      |      |      |      |      |  |      |      |      |      |  0   |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RAISE] = LAYOUT(
       _______, KC_1, 	KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7, KC_8, KC_9, KC_0,    _______,
-      _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                     _______, KC_4, KC_5, KC_6, _______, _______,
-      _______, _______, _______, _______, KC_MUTE, KC_VOLD, _______, _______, _______, _______, _______, KC_1, KC_2, KC_3, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_0, KC_0
+      _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                     KC_TAB,  KC_4, KC_5, KC_6, _______, _______,
+      _______, _______, _______, _______, KC_MUTE, KC_VOLD, _______, _______, _______, _______, KC_0,    KC_1, KC_2, KC_3, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, KC_0, _______
     ),
 /*
  * Adjust Layer: Function keys, RGB
@@ -262,3 +262,12 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     }
 }
 #endif
+
+bool get_ignore_mod_tap_interrupt(uint16_t keycode) {
+  switch (keycode) {
+    case SFT_T(KC_SPC):
+      return true;
+    default:
+      return false;
+  }
+}
