@@ -45,4 +45,4 @@
 
 // Mod Tap
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
-// #define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD
