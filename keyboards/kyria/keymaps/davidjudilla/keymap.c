@@ -15,6 +15,11 @@
  */
 #include QMK_KEYBOARD_H
 
+//Tap dance enums
+enum {
+  GUI_CTL = 0
+};
+
 #define K_LOCK LGUI(LCTL(KC_Q)) // Locks screen on MacOS
 #define KC_CMDC LCTL(KC_C) // Ctrl + C
 
@@ -38,15 +43,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  - _   |
  * `-----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                         | MUTE | Alt  |Lower | Space| Ctrl |  | Ctrl | Space| Raise|  Alt | LOCK |
- *                         |      |      |      |  GUI |      |  |      |LShift|      |      |      |
+ *                         | MUTE | Alt  |Lower | MOD  | Ctrl |  | Ctrl | Space| Raise|  Alt | LOCK |
+ *                         |      |      |      | TD   |      |  |      |LShift|      |      |      |
  *                         `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      KC_GESC,              KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,        KC_U,     KC_I,        KC_O,    KC_P,                KC_BSPC,
-      MT(MOD_LCTL, KC_TAB), KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,        KC_J,     KC_K,        KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
-      KC_LSFT,              KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_LSFT, KC_CMDC,     KC_N,        KC_M,     KC_COMM,     KC_DOT,  LT(_MOUSE, KC_SLSH), KC_MINS,
-                                            KC_MUTE, KC_LALT, MO(_LOWER), MT(MOD_LGUI, KC_SPC), KC_LCTL, MT(MOD_RSFT, KC_ENT), MT(MOD_LSFT, KC_SPC),  LT(_RAISE, KC_SPACE),  KC_LALT, K_LOCK
+      KC_GESC, KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,        KC_U,     KC_I,        KC_O,    KC_P,                KC_BSPC,
+      KC_TAB,  KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,        KC_J,     KC_K,        KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
+      KC_LSFT, KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_CMDC, MO(_LOWER),     KC_N,        KC_M,     KC_COMM,     KC_DOT,  LT(_MOUSE, KC_SLSH), KC_MINS,
+                               KC_MUTE, KC_LALT, MO(_LOWER), TD(GUI_CTL), KC_LCTL, MT(MOD_RSFT, KC_ENT), MT(MOD_LSFT, KC_SPC),  LT(_RAISE, KC_SPACE),  KC_LALT, K_LOCK
     ),
 /*
  * Lower Layer: Symbols
@@ -54,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  -   |  =   |  | \   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  #   |  $   |  (   |  )   |  `   |                              |   +  |  (   |  )   |  [   |  ]   |  ' "   |
+ * |        |  #   |  $   |  (   |  )   |  `   |                              |   +  |  -   |  =   |  [   |  ]   |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |  %   |  ^   |  [   |  ]   |  ~   |      |      |  |      |      |   &  |  =   |  ,   |  .   |  / ? | - _    |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -63,8 +68,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_LOWER] = LAYOUT(
-      KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQUAL, KC_BSLS,
-      _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_QUOT,
+      KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS,
+      _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
                                  _______, _______, _______, KC_SCLN, KC_EQL,  KC_EQL,  MT(MOD_LSFT, KC_SCLN), _______, _______, _______ 
     ),
@@ -92,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Adjust Layer: Function keys, RGB
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | F1   |  F2  | F3   | F4   | F5   |                              | F6   | F7   |  F8  | F9   | F10  | 1Pass  |
+ * |  RESET | F1   |  F2  | F3   | F4   | F5   |                              | F6   | F7   |  F8  | F9   | F10  | 1Pass  |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        | TOG  | SAI  | HUI  | VAI  | MOD  |                              |      |      |      | F11  | F12  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -103,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  G(C(KC_BSLS)),
+      RESET,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  G(C(KC_BSLS)),
       _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     _______, _______, _______, KC_F11,  KC_F12,  _______,
       _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -126,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,                                     _______, _______, KC_UP, _______, _______, _______,
       _______, KC_HOME, KC_PGUP, S(KC_TAB), KC_TAB,  _______,                                     _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                 _______, _______, _______, _______, _______, _______, C(KC_MINS), C(KC_EQL), _______, _______
     ),
 /*
  * Mouse template
@@ -271,3 +276,27 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode) {
       return false;
   }
 }
+
+void dance_cln_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_LGUI);
+  } else if (state->count == 2) {
+    register_code (KC_LCTL);
+  } else {
+    register_code (KC_LALT);
+  }
+}
+
+void dance_cln_reset (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    unregister_code (KC_LGUI);
+  } else if (state->count == 2) {
+    unregister_code (KC_LCTL);
+  } else {
+    unregister_code (KC_LALT);
+  }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [GUI_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset)
+};
