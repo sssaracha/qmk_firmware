@@ -22,6 +22,9 @@ enum {
 
 #define K_LOCK LGUI(LCTL(KC_Q)) // Locks screen on MacOS
 #define KC_CMDC LCTL(KC_C) // Ctrl + C
+#define KC_CTAB MT(MOD_LCTL, KC_TAB)
+#define LOENT LT(_LOWER, KC_ENT)
+
 
 enum layers {
     _QWERTY = 0,
@@ -41,17 +44,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctrl/Tab |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |---------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  - _   |
+ * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  ENTER |
  * `-----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                         | MUTE | Alt  |Lower | MOD  | Ctrl |  | Ctrl | Space| Raise|  Alt | LOCK |
- *                         |      |      |      | TD   |      |  |      |LShift|      |      |      |
+ *                         | MUTE | Alt  |Lower | MOD  | Ctrl |  | LAYER| Space| Raise|  Alt | LOCK |
+ *                         |      |      |      | TD   |      |  | ENT  |LShift|      |      |      |
  *                         `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      KC_GESC, KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,        KC_U,     KC_I,        KC_O,    KC_P,                KC_BSPC,
-      KC_TAB,  KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,        KC_J,     KC_K,        KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
-      KC_LSFT, KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_CMDC, MO(_LOWER),     KC_N,        KC_M,     KC_COMM,     KC_DOT,  LT(_MOUSE, KC_SLSH), KC_MINS,
-                               KC_MUTE, KC_LALT, MO(_LOWER), TD(GUI_CTL), KC_LCTL, MT(MOD_RSFT, KC_ENT), MT(MOD_LSFT, KC_SPC),  LT(_RAISE, KC_SPACE),  KC_LALT, K_LOCK
+      KC_GESC, KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,      KC_U,       KC_I,    KC_O,    KC_P,                KC_BSPC,
+      KC_CTAB, KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,      KC_J,       KC_K,    KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
+      KC_LSFT, KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_LSFT, MO(_LOWER),  KC_N,      KC_M,       KC_COMM, KC_DOT,  LT(_MOUSE, KC_SLSH), MT(MOD_LSFT, KC_ENT),
+                               KC_MUTE, KC_LALT, MO(_LOWER), MT(MOD_LGUI, KC_SPC), KC_LCTL, LOENT,   MT(MOD_LSFT, KC_SPC), LT(_RAISE, KC_SPACE),  KC_ENT,  K_LOCK
     ),
 /*
  * Lower Layer: Symbols
@@ -71,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSLS,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-                                 _______, _______, _______, KC_SCLN, KC_EQL,  KC_EQL,  MT(MOD_LSFT, KC_SCLN), _______, _______, _______ 
+                                 _______, _______, _______, KC_SCLN, _______,  _______,  MT(MOD_LSFT, KC_SCLN), _______, _______, _______ 
     ),
 /*
  * Raise Layer: Number keys, media, navigation
@@ -88,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RAISE] = LAYOUT(
-      _______, KC_1, 	KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7, KC_8, KC_9, KC_0,    _______,
+      _______, KC_1, 	KC_2,    KC_3,    KC_4,    KC_5,                                          KC_6,    KC_7, KC_8, KC_9, KC_0,    _______,
       _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                     KC_TAB,  KC_4, KC_5, KC_6, _______, _______,
       _______, _______, KC_BRID, KC_BRIU, KC_MUTE, KC_VOLD, _______, _______, _______, _______, KC_0,    KC_1, KC_2, KC_3, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, KC_0, _______
