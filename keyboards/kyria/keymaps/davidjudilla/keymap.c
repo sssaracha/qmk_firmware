@@ -23,7 +23,7 @@ enum {
 #define K_LOCK LGUI(LCTL(KC_Q)) // Locks screen on MacOS
 #define KC_CMDC LCTL(KC_C) // Ctrl + C
 #define KC_CTAB MT(MOD_LCTL, KC_TAB)
-#define LOENT LT(_LOWER, KC_ENT)
+#define LOENT MO(_LOWER)
 
 
 enum layers {
@@ -44,17 +44,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctrl/Tab |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |---------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift|LShift|   N  |   M  | ,  < | . >  | /  ? |  ENTER |
+ * | LShift  |   Z  |   X  |   C  |   V  |   B  |LCtl  |LShift|  |LShift| ENT  |   N  |   M  | ,  < | . >  | /  ? |  ENTER |
  * `-----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                         | MUTE | Alt  |Lower | MOD  | Ctrl |  | LAYER| Space| Raise|  Alt | LOCK |
  *                         |      |      |      | TD   |      |  | ENT  |LShift|      |      |      |
  *                         `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      KC_GESC, KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                            KC_Y,      KC_U,       KC_I,    KC_O,    KC_P,                KC_BSPC,
-      KC_CTAB, KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                            KC_H,      KC_J,       KC_K,    KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
-      KC_LSFT, KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,       MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_LSFT, MO(_LOWER),  KC_N,      KC_M,       KC_COMM, KC_DOT,  LT(_MOUSE, KC_SLSH), MT(MOD_LSFT, KC_ENT),
-                               KC_MUTE, KC_LALT, MO(_LOWER), MT(MOD_LGUI, KC_SPC), KC_LCTL, LOENT,   MT(MOD_LSFT, KC_SPC), LT(_RAISE, KC_SPACE),  KC_ENT,  K_LOCK
+      KC_GESC, KC_Q,   KC_W,   KC_E,    KC_R,    KC_T,                                                                 KC_Y,      KC_U,       KC_I,    KC_O,    KC_P,                KC_BSPC,
+      KC_CTAB, KC_A,   KC_S,   KC_D,    KC_F,    KC_G,                                                                 KC_H,      KC_J,       KC_K,    KC_L,    LT(_NAV, KC_SCLN),   KC_QUOT,
+      KC_LSFT, KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,               MT(MOD_LSFT, KC_TAB), KC_LSFT, KC_LSFT, KC_ENT,  KC_N,      KC_M,       KC_COMM, KC_DOT,  LT(_MOUSE, KC_SLSH), MT(MOD_LSFT, KC_ENT),
+                               KC_MUTE, KC_LALT, LT(_LOWER, KC_SPC), MT(MOD_LGUI, KC_SPC), KC_LCTL, LOENT,   MT(MOD_LSFT, KC_SPC), LT(_RAISE, KC_SPACE),  KC_LSFT,  K_LOCK
     ),
 /*
  * Lower Layer: Symbols
@@ -274,6 +274,8 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 bool get_ignore_mod_tap_interrupt(uint16_t keycode) {
   switch (keycode) {
     case SFT_T(KC_SPC):
+      return true;
+    case GUI_T(KC_SPC):
       return true;
     default:
       return false;
